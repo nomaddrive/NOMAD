@@ -1,0 +1,125 @@
+seed: &seed 42
+
+environment: # Overrides default environment configs (see pygpudrive/env/config.py)
+  ego_state: true
+  road_map_obs: true
+  partner_obs: true
+  norm_obs: true
+  max_controlled_agents: 64 # Maximum number of agents controlled by the model
+  num_worlds: &num_worlds 800 # Number of parallel environments
+  lidar_obs: false
+  collision_weight: -0.75
+  off_road_weight: -0.75
+  goal_achieved_weight: 1.0
+  obs_radius: 50.0
+  polyline_reduction_threshold: 0.1
+  dynamics_model: "delta_local"
+  collision_behavior: "ignore"
+  remove_non_vehicles: true
+  init_steps: 0
+  reward_type: "weighted_combination"
+  dist_to_goal_threshold: 2.0
+  controllable_agent_selection: "no_static"
+  use_vbd: false
+  vbd_model_path: "gpudrive/integrations/vbd/weights/epoch=18.ckpt"
+  vbd_trajectory_weight: 0.1
+  vbd_in_obs: false
+
+data_loader:
+  root: PATH/TO/DATASET
+  batch_size: *num_worlds
+  dataset_size: 100_000
+  sample_with_replacement: false
+  file_prefix: ""
+  seed: *seed
+  shuffle: false
+
+scene_dataset:
+  save_path: data/nuplan/
+  file_suffix: heuristic_scenes
+
+scene_generation:
+  # Number of scene variations to generate per scenario
+  num_sets: 8
+  
+  # Default city selection (can be overridden by command line)
+  default_city: "pittsburgh"
+
+  # City-specific parameters
+  city_params:
+    boston:
+      use_gamma_density: true
+      gamma_alpha: 1.4694
+      gamma_loc: 0.1897
+      gamma_scale: 0.4252
+    pittsburgh:
+      use_gamma_density: true
+      gamma_alpha: 2.1327
+      gamma_loc: 0.0000
+      gamma_scale: 0.3982
+    singapore:
+      use_gamma_density: true
+      gamma_alpha: 1.2630 
+      gamma_loc: 0.1363
+      gamma_scale: 0.2500
+    vegas:
+      use_gamma_density: true
+      gamma_alpha: 1.3371
+      gamma_loc: 0.1944
+      gamma_scale: 1.3044
+
+  # Vehicle initialization parameters (Defaults)
+  vehicle_density_per_km: 1.0  # Vehicles per kilometer of lane network
+  
+  # Gamma distribution parameters for density (overrides vehicle_density_per_km if use_gamma_density is true)
+  # These are now handled by city_params, but kept as fallback
+  use_gamma_density: true
+  gamma_alpha: 1.2630
+  gamma_loc: 0.1363
+  gamma_scale: 0.2500
+  
+  static_vehicle_ratio: 0.5 # Ratio of static vehicles to total vehicles
+  static_vehicle_prob: 0.5 # Probability of generating static vehicles in a scenario
+  min_time_gap: 1.2  # Minimum time gap between vehicles (seconds)
+  lateral_deviation_std: 0.3  # Lateral deviation from lane center (meters)
+  min_distance: 5.0  # Minimum center-to-center distance (meters)
+  heading_noise_std: 0.1  # Heading noise std dev (radians)
+  min_speed: 0.0  # Minimum vehicle speed (m/s)
+  speed_mean_percentile: 0.85  # Mean speed as fraction of max_speed (85th percentile)
+  speed_std_percentile: 0.22  # Speed std dev as fraction of max_speed (22%)
+  
+  # Goal generation parameters
+  distance_mean_coeff: 9.0  # Mean goal distance = coeff * speed
+  distance_std_coeff: 3.0  # Std goal distance = coeff * speed
+  min_distance: 5.0  # Minimum goal distance (meters)
+  max_distance: 200.0  # Maximum goal distance (meters)
+  prefer_straight: false  # Prefer straight paths over turns
+  max_hops: 200  # Maximum lane transitions when advancing
+  max_heading_mismatch_deg: 90.0  # Max heading mismatch for lane snapping
+  heading_penalty: 5.0  # Penalty for heading mismatch
+  nearest_k: 24  # Number of nearest segments to check
+  
+  # Goal noise parameters
+  add_goal_noise: true
+  goal_noise_std_x: 1.0  # Goal noise std dev in x (meters)
+  goal_noise_std_y: 1.0  # Goal noise std dev in y (meters)
+  goal_noise_corr: 0.0  # Correlation between x and y noise [-1, 1]
+  goal_noise_max_abs: 1.2
+  
+  # Lane network parameters
+  eps: 0.01  # Tolerance for connecting lane segments
+  snap_tol: 0.1  # Tolerance for snapping to lane endpoints (meters)
+  max_angle_deg: 45.0  # Max angle for lane connections (degrees)
+  rng_seed: *seed
+  global_seed: *seed
+  minimum_speed_threshold: 2.0
+  projection_sample_mode: softmax
+  projection_softmax_temp: 1.0
+  projection_k: 8
+
+train:
+  exp_id: SceneGen
+  seed: *seed
+  device: "cuda"
+  torch_deterministic: false
+  action_type: "multi_discrete"

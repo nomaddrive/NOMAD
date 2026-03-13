@@ -1,0 +1,47 @@
+seed: &seed 42
+
+environment: # Overrides default environment configs (see pygpudrive/env/config.py)
+  ego_state: true
+  road_map_obs: true
+  partner_obs: true
+  norm_obs: true
+  max_controlled_agents: 64 # Maximum number of agents controlled by the model. Make sure this aligns with the variable kMaxAgentCount in src/consts.hpp
+  num_worlds: &num_worlds 800 # Number of parallel environments
+  lidar_obs: false # NOTE: Setting this to true currently turns of the other observation types
+  collision_weight: -0.75
+  off_road_weight: -0.75
+  goal_achieved_weight: 1.0
+  obs_radius: 50.0 # Visibility radius of the agents
+  polyline_reduction_threshold: 0.1 # Rate at which to sample points from the polyline (0 is use all closest points, 1 maximum sparsity), needs to be balanced with kMaxAgentMapObservationsCount
+  dynamics_model: "delta_local"
+  collision_behavior: "ignore" # Options: "remove", "stop", "ignore"
+  remove_non_vehicles: true # If false, all agents are included (vehicles, pedestrians, cyclists)
+  init_steps: 0
+  reward_type: "weighted_combination"
+  dist_to_goal_threshold: 2.0
+  controllable_agent_selection: "no_static"
+  # Versatile Behavior Diffusion (VBD): This will slow down training
+  use_vbd: false
+  vbd_model_path: "gpudrive/integrations/vbd/weights/epoch=18.ckpt"
+  vbd_trajectory_weight: 0.1 # Importance of distance to the vbd trajectories in the reward function
+  vbd_in_obs: false
+
+data_loader:
+  root: PATH/TO/DATASET
+  batch_size: *num_worlds
+  dataset_size: 20_000
+  sample_with_replacement: false
+  file_prefix: ""
+  seed: *seed
+  shuffle: false
+
+experience:
+  dataset_size: 5_000_000
+  experience_path: PATH/TO/DATASET
+
+train:
+  exp_id: DataGen # Set dynamically in the script if needed
+  seed: *seed
+  device: "cuda"  # Dynamically set to cuda if available, else cpu
+  torch_deterministic: false
+  action_type: "multi_discrete"
