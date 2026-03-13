@@ -1,13 +1,13 @@
 This is the official implementation of *[Learning to Drive in New Cities Without Human Demonstrations](https://nomaddrive.github.io/).*
 
 ## Environment Configuration
-### Compile docker image
+### Compile Docker image
 ```
 DOCKER_BUILDKIT=1 docker build --build-arg USE_CUDA=true --tag gpudrive:latest --progress=plain .
 ```
-### Install dependences
+### Install dependencies
 ```
-# Run docker container
+# Run Docker container
 docker run --gpus all -it --rm --shm-size=20G -v ${PWD}:/workspace gpudrive:latest /bin/bash
 # Build gpudrive
 mkdir build
@@ -39,8 +39,8 @@ python baselines/eval/wosac_evaluation.py
 ```
 
 ---
-If you find this repo is helpful, don't forget to give us a star!
-If this repo helps your research, please cite these work:
+If you find this repo helpful, don't forget to give us a star!
+If this repo helps your research, please cite this work:
 ```
 @article{wang2026learning,
   title={Learning to Drive in New Cities Without Human Demonstrations},
