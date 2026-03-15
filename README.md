@@ -15,7 +15,8 @@ cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 && find e
 make -j
 ```
 ## Dataset Download
-[TODO]
+NuPlan scenarios (Pittsburgh, Singapore, Boston) are available as the [NOMAD dataset](https://huggingface.co/datasets/saeedrmd/NOMAD) on Hugging Face.
+
 ## Training
 ### Demonstration Generation
 ```
