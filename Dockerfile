@@ -62,14 +62,14 @@ RUN pip3 install --no-cache-dir nvidia-cuda-runtime-cu12==12.4.127 && rm -rf ~/.
 RUN pip3 install --no-cache-dir 'jax[cuda12]<=0.6.0' && rm -rf ~/.cache/pip/*
 
 
-RUN groupadd -g 1014 zilin &&\
-    useradd -l -u 3725 -g zilin zilin &&\
-    install -d -m 0755 -o zilin -g zilin /home/zilin &&\
-    chown --changes --silent --no-dereference --recursive 3725:1014 /home/zilin
+RUN groupadd -g 1014 duser &&\
+    useradd -l -u 3725 -g duser duser &&\
+    install -d -m 0755 -o duser -g duser /home/duser &&\
+    chown --changes --silent --no-dereference --recursive 3725:1014 /home/duser
 
-ENV MADRONA_MWGPU_KERNEL_CACHE=/home/zilin/gpudrive_cache
+ENV MADRONA_MWGPU_KERNEL_CACHE=/home/duser/gpudrive_cache
 
-USER zilin
+USER duser
 WORKDIR /workspace
 
 CMD ["/bin/bash"]

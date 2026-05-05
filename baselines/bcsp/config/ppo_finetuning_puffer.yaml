@@ -41,7 +41,7 @@ environment: # Overrides default environment configs (see pygpudrive/env/config.
 
 wandb:
   entity: ""
-  project: "drive_in_new_city_icml"
+  project: "drive_in_new_city"
   group: "boston-to-singapore"
   mode: "online" # Options: online, offline, disabled
   tags: ["ppo", "ff"]

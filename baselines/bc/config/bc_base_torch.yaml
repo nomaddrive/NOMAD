@@ -38,7 +38,7 @@ data_loader:
 
 wandb:
   entity: ""
-  project: "drive_in_new_city_icml"
+  project: "drive_in_new_city"
   group: "bc_boston"
   mode: "online" # Options: online, offline, disabled
   tags: ["bc", "ff"]

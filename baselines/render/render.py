@@ -282,7 +282,7 @@ if __name__ == "__main__":
         torch_deterministic=config.train.torch_deterministic,
     )
 
-    results_dir = Path("visualization_icml") / config.train.model_cpt.split('/')[-1][:-3]
+    results_dir = Path("visualization") / config.train.model_cpt.split('/')[-1][:-3]
     results_dir = results_dir / config.data_loader.root.split('/')[-1]  # Use last part of data root as subdir
     results_dir.mkdir(parents=True, exist_ok=True)
 

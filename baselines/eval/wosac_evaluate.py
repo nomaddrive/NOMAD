@@ -324,9 +324,9 @@ if __name__ == "__main__":
         config.train.model_cpt_dir = args.model_cpt_dir
 
     if args.expert_policy_mode == 'none':
-        results_dir = Path("eval_wosac_icml_logreplay") / config.environment.collision_behavior / str(config.environment.mirror_x) / config.train.model_cpt_dir.split('/')[-1]
+        results_dir = Path("eval_wosac_logreplay") / config.environment.collision_behavior / str(config.environment.mirror_x) / config.train.model_cpt_dir.split('/')[-1]
     else:
-        results_dir = Path("eval_wosac_icml_logreplay") / config.environment.collision_behavior / str(config.environment.mirror_x) / ('expert_policy_mode_' + args.expert_policy_mode)
+        results_dir = Path("eval_wosac_logreplay") / config.environment.collision_behavior / str(config.environment.mirror_x) / ('expert_policy_mode_' + args.expert_policy_mode)
     results_dir = results_dir / config.data_loader.root.split('/')[-1]  # Use last part of data root as subdir
     results_dir.mkdir(parents=True, exist_ok=True)
 

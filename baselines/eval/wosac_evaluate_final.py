@@ -352,7 +352,7 @@ if __name__ == "__main__":
         torch_deterministic=config.train.torch_deterministic,
     )
 
-    results_dir = Path("eval_wosac_icml") / config.environment.collision_behavior / str(config.environment.mirror_x) / "assigned_checkpoints" / eval_run_dir[0].split('/')[-1]
+    results_dir = Path("eval_wosac") / config.environment.collision_behavior / str(config.environment.mirror_x) / "assigned_checkpoints" / eval_run_dir[0].split('/')[-1]
     results_dir = results_dir / config.data_loader.root.split('/')[-1]  # Use last part of data root as subdir
     results_dir.mkdir(parents=True, exist_ok=True)
 
