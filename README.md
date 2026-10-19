@@ -1,4 +1,7 @@
-This is the official implementation of *[Learning to Drive in New Cities Without Human Demonstrations](https://nomaddrive.github.io/).*
+> [!IMPORTANT]
+> **This repository has moved to [zerlinwang/NOMAD](https://github.com/zerlinwang/NOMAD)**, and the project page to [zerlinwang.github.io/NOMAD](https://zerlinwang.github.io/NOMAD/). Please star, open issues, and send pull requests there; this copy is no longer maintained.
+
+This is the official implementation of *[Learning to Drive in New Cities Without Human Demonstrations](https://zerlinwang.github.io/NOMAD/).*
 
 ## Environment Configuration
 ### Compile Docker image
