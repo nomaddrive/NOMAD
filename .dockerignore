@@ -4,3 +4,9 @@ Dockerfile
 !.gitignore
 !.gitmodules
 !.python-version
+
+# Keep the build context small: these are not needed to build the image
+dataset
+*.pdf
+build
+**/__pycache__

@@ -40,6 +40,11 @@ dependencies = [
     "jax",
     "huggingface_hub",
     "cmake==4.0.0",
+    "scipy",
+    "scikit-learn",
+    "shapely",
+    "imageio",
+    "rich",
 ]
 
 [dependency-groups]
